@@ -4,13 +4,12 @@ import pickle
 
 app = Flask(__name__, template_folder='templates')
 
-# ✅ Load the actual model object from file
 with open("model.pkl", "rb") as f:
     model = pickle.load(f)
 
 @app.route('/')
 def home():
-    return render_template('index.html')  # ✅ Do not include "templates/"
+    return render_template('index.html')  
 
 @app.route('/predict', methods=['POST'])
 def predict():
