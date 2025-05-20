@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Housing Price Prediction</title>
+  <style>
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f2f2f2;
+}
+
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #444;
+}
+
+input,
+select {
+  margin-top: 6px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+button {
+  margin-top: 30px;
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+#result {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 20px;
+  color: #444;
+}
+
+  </style>
+  <div class="container">
+    <h1>Housing Price Prediction</h1>
+    <form id="prediction-form">
+      <div class="form-grid">
+        <label>Area (sq ft): <input type="number" name="area" required></label>
+        <label>Bedrooms: <input type="number" name="bedrooms" required></label>
+        <label>Bathrooms: <input type="number" name="bathrooms" required></label>
+        <label>Stories: <input type="number" name="stories" required></label>
+
+        <label>Main Road:
+          <select name="mainroad">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+
+        <label>Guest Room:
+          <select name="guestroom">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+
+        <label>Basement:
+          <select name="basement">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+
+        <label>Hot Water Heating:
+          <select name="hotwaterheating">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+
+        <label>Air Conditioning:
+          <select name="airconditioning">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+
+        <label>Parking Spaces: <input type="number" name="parking" required></label>
+
+        <label>Preferred Area:
+          <select name="prefarea">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+
+        <label>Furnishing Status:
+          <select name="furnishingstatus">
+            <option value="furnished">Furnished</option>
+            <option value="semi-furnished">Semi-Furnished</option>
+            <option value="unfurnished">Unfurnished</option>
+          </select>
+        </label>
+      </div>
+
+      <button type="submit">Predict Price</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+  <script>
+  document.getElementById('prediction-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Get form data
+    const formData = new FormData(this);
+    
+    // Extract values from the form
+    const area = Number(formData.get('area'));
+    const bedrooms = Number(formData.get('bedrooms'));
+    const bathrooms = Number(formData.get('bathrooms'));
+    const stories = Number(formData.get('stories'));
+    const mainroad = formData.get('mainroad') === 'yes' ? 1 : 0;
+    const guestroom = formData.get('guestroom') === 'yes' ? 1 : 0;
+    const basement = formData.get('basement') === 'yes' ? 1 : 0;
+    const hotwaterheating = formData.get('hotwaterheating') === 'yes' ? 1 : 0;
+    const airconditioning = formData.get('airconditioning') === 'yes' ? 1 : 0;
+    const parking = Number(formData.get('parking'));
+    const prefarea = formData.get('prefarea') === 'yes' ? 1 : 0;
+    const furnishingstatus = formData.get('furnishingstatus');
+
+    // Simple mock prediction formula (for demo purposes)
+    let price = (area * 100) + (bedrooms * 5000) + (bathrooms * 3000) + (stories * 2000);
+    price += mainroad * 10000;
+    price += guestroom * 5000;
+    price += basement * 7000;
+    price += hotwaterheating * 4000;
+    price += airconditioning * 6000;
+    price += parking * 3000;
+    price += prefarea * 8000;
+
+    // Adjust price based on furnishing status
+    if (furnishingstatus === 'furnished') {
+      price *= 1.2;
+    } else if (furnishingstatus === 'semi-furnished') {
+      price *= 1.1;
+    }
+
+    // Display the result
+    document.getElementById('result').textContent = `Predicted Price: $${price.toFixed(2)}`;
+  });
+  </script>
+</body>
+</html>
