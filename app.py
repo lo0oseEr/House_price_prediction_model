@@ -17,7 +17,7 @@ def predict():
         features = [float(x) for x in request.form.values()]
         prediction = model.predict([features])
         output = round(prediction[0], 2)
-        return render_template("index.html", prediction_text=f"The final price of the house is: $ {output}")
+        return render_template("index.html", prediction_text=f"The final price of the house is: Rs {output}")
     except Exception as e:
         return render_template("index.html", prediction_text=f"Error: {e}")
 
